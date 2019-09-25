@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "analyzer": "cross-env use_analyzer=true npm run serve"
   },
   "dependencies": {
     "core-js": "^2.6.5",
