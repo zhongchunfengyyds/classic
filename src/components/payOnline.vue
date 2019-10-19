@@ -1,7 +1,16 @@
 <template>
   <div class="payOnline">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="微信付款" name="second">配置管理</el-tab-pane>
+      <el-tab-pane label="微信付款" name="second">
+        <el-button @click="request">请求</el-button>
+        <form action="http://localhost:3000" method="post">
+          账号：
+          <input name="user" />
+          密码：
+          <input name="pass" />
+          <input type="submit" value="提交" />
+        </form>
+      </el-tab-pane>
       <el-tab-pane label="支付宝付款" name="first">用户管理</el-tab-pane>
     </el-tabs>
   </div>
@@ -16,6 +25,18 @@ export default {
     };
   },
   methods: {
+    request() {
+      this.$axios
+        .post("/vip/login", {
+          name: "xiaozhong"
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     handleClick(e) {
       console.log(e);
     }
