@@ -26,9 +26,10 @@ export default {
   },
   methods: {
     request() {
+      let time = new Date().getTime();
       this.$axios
         .post("/vip/login", {
-          name: "xiaozhong"
+          name: time
         })
         .then(res => {
           console.log(res);
