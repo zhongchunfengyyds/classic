@@ -28,7 +28,7 @@ export default {
   methods: {
     login() {
       this.$axios
-        .get("/login", { user: this.user, password: this.password })
+        .post("/login", { user: this.user, password: this.password })
         .then(res => {
           console.log(res.data);
           if (res.data == 0) {
