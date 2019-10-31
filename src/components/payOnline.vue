@@ -1,7 +1,7 @@
 <template>
   <div class="payOnline">
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="微信付款" name="second">
+      <el-tab-pane label="练习" name="second">
         <el-button @click="request">请求</el-button>
         <form action="http://localhost:3000" method="post">
           账号：
@@ -11,7 +11,7 @@
           <input type="submit" value="提交" />
         </form>
       </el-tab-pane>
-      <el-tab-pane label="支付宝付款" name="first">用户管理</el-tab-pane>
+      <el-tab-pane label="嘿嘿" name="first">用户管理</el-tab-pane>
     </el-tabs>
   </div>
 </template>

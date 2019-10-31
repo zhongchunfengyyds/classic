@@ -27,6 +27,18 @@ export default new Router({
           name: 'payOnline',
           component: () =>
             import( /* webpackChunkName: "payOnline" */ './components/payOnline.vue')
+        },
+        {
+          path: '/map',
+          name: 'map',
+          component: () =>
+            import( /* webpackChunkName: "home" */ './components/map.vue')
+        },
+        {
+          path: '/news',
+          name: 'news',
+          component: () =>
+            import( /* webpackChunkName: "home" */ './components/news.vue')
         }
       ],
       component: () =>

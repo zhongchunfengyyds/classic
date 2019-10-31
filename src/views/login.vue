@@ -32,7 +32,7 @@ export default {
         .then(res => {
           console.log(res.data);
           if (res.data == 0) {
-            this.$rouer.push({ name: "home" });
+            this.$router.push({ name: "home" });
           } else {
             this.$alert(res.msg, "登陆失败", {
               confirmButtonText: "确定"

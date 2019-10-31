@@ -17,13 +17,9 @@
                 <i class="el-icon-location"></i>
                 <span>导航一</span>
               </template>
-              <el-menu-item-group>
-                <el-menu-item index="1-1" @click="payOnline">在线支付</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3">选项3</el-menu-item>
-              </el-menu-item-group>
+                <el-menu-item index="1-1" @click="payOnline">练习</el-menu-item>
+                <el-menu-item index="1-2" @click="map">地图</el-menu-item>
+                <el-menu-item index="1-3" @click="news">新闻</el-menu-item>
               <el-submenu index="1-4">
                 <template slot="title">选项4</template>
                 <el-menu-item index="1-4-1">选项1</el-menu-item>
@@ -61,11 +57,18 @@ export default {
     };
   },
   methods: {
+    news(){
+      this.$router.push({ path: "/news" });
+    },
     handleOpen() {},
     handleClose() {},
     payOnline() {
       this.$router.push({ path: "/payOnline" });
-    }
+    },
+    map() {
+      console.log(123213)
+      this.$router.push({ path: "/map" });
+    },
   },
   created() {}
 };
