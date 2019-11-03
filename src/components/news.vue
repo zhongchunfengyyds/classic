@@ -1,65 +1,117 @@
 <template>
   <div class="hello">
     <div class="content">
+      <div v-if="showDetailNews"></div>
       <div
         class="content-detail"
         @dblclick="rmNews(item)"
+        @click.right.prevent.stop="rightEvent(item)"
+        @click="showNews(item)"
         v-for="(item,index) in newsList"
         :key="index"
+        v-else
       >{{item.content}}</div>
     </div>
     <div class="footer">
       <el-input type="textarea" :rows="7" placeholder="发布新闻..." v-model="textarea"></el-input>
       <div class="submit-news">
-        <el-button type="primary" @click="submit">提交</el-button>
+        <el-button type="primary" @click="changeNews" v-if="changeId">修改</el-button>
+        <el-button type="primary" @click="giveUpChange" v-if="changeId">取消</el-button>
+        <el-button type="primary" @click="submit" v-else>提交</el-button>
+      </div>
+      <div>
+        <p>双击删除新闻</p>
+        <p>右击修改新闻</p>
+        <p>单击查看新闻</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+let time;
 export default {
   name: "HelloWorld",
-  data () {
+  data() {
     return {
+      showDetailNews: "",
       newsList: [],
-      textarea: ''
-    }
+      textarea: "",
+      changeId: 0
+    };
   },
   methods: {
-    submit () {
-      this.$axios.post('/news/uploadNews', {
-        content: this.textarea
-      }).then(res => {
-        if (res.code === 0) {
-          this.$message('发布成功');
-          this.$axios.get('/news/getNews').then(res => {
-            this.newsList = res.data
-          })
-        } else {
-          this.$message.error(res.data);
-        }
-      })
+    submit() {
+      this.$axios
+        .post("/news/uploadNews", {
+          content: this.textarea
+        })
+        .then(res => {
+          if (res.code === 0) {
+            this.$message("发布成功");
+            this.getNews();
+            this.textarea = "";
+          } else {
+            this.$message.error(res.data);
+          }
+        });
     },
-    rmNews (item) {
-      this.$axios.post('/news/removeNews', {
-        content: item.content
-      }).then(res => {
-        if (res.code === 0) {
-          this.$message('删除成功');
-          this.$axios.get('/news/getNews').then(res => {
-            this.newsList = res.data
-          })
-        } else {
-          this.$message.error(res.data);
-        }
-      })
+    giveUpChange() {
+      this.changeId = 0;
+      this.textarea = "";
+    },
+    changeNews() {
+      this.$axios
+        .post("/news/changeNews", {
+          id: this.changeId,
+          content: this.textarea
+        })
+        .then(res => {
+          if (res.code === 0) {
+            this.$message("修改成功");
+            this.getNews();
+            this.textarea = "";
+            this.changeId = 0;
+          } else {
+            this.$message.error("修改失败");
+          }
+        });
+    },
+    showNews() {
+      //执行延时
+      // timer = setTimeout(() => {
+      //   this.$message("功能正在开发中");
+      //   //do function在此处写单击事件要执行的代码
+      // }, 1000);
+    },
+    rightEvent(item) {
+      this.textarea = item.content;
+      this.changeId = item._id;
+    },
+    rmNews(item) {
+      // clearTimeout(timer);
+      console.log(item);
+      this.$axios
+        .post("/news/removeNews", {
+          content: item._id
+        })
+        .then(res => {
+          if (res.code === 0) {
+            this.$message("删除成功");
+            this.getNews();
+          } else {
+            this.$message.error(res.data);
+          }
+        });
+    },
+    getNews() {
+      this.$axios.get("/news/getNews").then(res => {
+        this.newsList = res.data;
+      });
     }
   },
-  created () {
-    this.$axios.get('/news/getNews').then(res => {
-      this.newsList = res.data
-    })
+  created() {
+    this.getNews();
   }
 };
 </script>
@@ -94,6 +146,10 @@ export default {
     }
     .submit-news {
       width: 300px;
+      padding-left: 20px;
+    }
+    p {
+      color: rgb(13, 67, 245);
     }
   }
 }
