@@ -2,14 +2,14 @@
   <div class="payOnline">
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="练习" name="second">
-        <el-button @click="request">请求</el-button>
-        <form action="http://localhost:3000" method="post">
-          账号：
-          <input name="user" />
-          密码：
-          <input name="pass" />
-          <input type="submit" value="提交" />
-        </form>
+        <el-upload class="upload-demo" drag action="http://127.0.0.1:3000/upload/image" multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">
+            将文件拖到此处，或
+            <em>点击上传</em>
+          </div>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
       </el-tab-pane>
       <el-tab-pane label="嘿嘿" name="first">用户管理</el-tab-pane>
     </el-tabs>
@@ -25,19 +25,6 @@ export default {
     };
   },
   methods: {
-    request() {
-      let time = new Date().getTime();
-      this.$axios
-        .post("/vip/login", {
-          name: time
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
     handleClick(e) {
       console.log(e);
     }

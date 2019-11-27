@@ -17,12 +17,12 @@
                 <i class="el-icon-location"></i>
                 <span>导航一</span>
               </template>
-                <el-menu-item index="1-1" @click="payOnline">练习</el-menu-item>
-                <el-menu-item index="1-2" @click="map">地图</el-menu-item>
-                <el-menu-item index="1-3" @click="news">新闻</el-menu-item>
+              <el-menu-item index="1-1" @click="payOnline">练习</el-menu-item>
+              <el-menu-item index="1-2" @click="map">地图</el-menu-item>
+              <el-menu-item index="1-3" @click="news">新闻</el-menu-item>
               <el-submenu index="1-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
+                <template slot="title">其他</template>
+                <el-menu-item index="1-4-1" @click="game">游戏</el-menu-item>
               </el-submenu>
             </el-submenu>
             <el-menu-item index="2">
@@ -57,7 +57,7 @@ export default {
     };
   },
   methods: {
-    news(){
+    news() {
       this.$router.push({ path: "/news" });
     },
     handleOpen() {},
@@ -66,9 +66,11 @@ export default {
       this.$router.push({ path: "/payOnline" });
     },
     map() {
-      console.log(123213)
       this.$router.push({ path: "/map" });
     },
+    game() {
+      this.$router.push({ path: "/game" });
+    }
   },
   created() {}
 };

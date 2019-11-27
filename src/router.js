@@ -39,6 +39,12 @@ export default new Router({
           name: 'news',
           component: () =>
             import( /* webpackChunkName: "home" */ './components/news.vue')
+        },
+        {
+          path: '/game',
+          name: 'game',
+          component: () =>
+            import( /* webpackChunkName: "home" */ './components/game.vue')
         }
       ],
       component: () =>
