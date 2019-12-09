@@ -1,22 +1,21 @@
 <template>
   <div class="game">
     <div class="game-box">
-      <div
-        class="game-box-item"
-        v-for="(item,index) in gameList"
-        :key="index"
-        :class="item == 0 ? '' : item == 1 ? 'red' : 'green'"
-        @click="play(index)"
-      ></div>
+      <div class="game-box-item"
+           v-for="(item,index) in gameList"
+           :key="index"
+           :class="item == 0 ? '' : item == 1 ? 'red' : 'green'"
+           @click="play(index)"></div>
     </div>
-    <div class="again" @click="overPlay">重新开始</div>
+    <div class="again"
+         @click="overPlay">重新开始</div>
   </div>
 </template>
 
 <script>
 export default {
   name: "game",
-  data() {
+  data () {
     return {
       gameList: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       status: 1,
@@ -24,8 +23,8 @@ export default {
     };
   },
   methods: {
-    overPlay() {},
-    play(index) {
+    overPlay () { },
+    play (index) {
       if (this.gameList[index] != 0) {
         return;
       }
@@ -34,26 +33,25 @@ export default {
       this.$set(this.gameList, index, this.status);
       this.status == 1 ? (this.status = 2) : (this.status = 1);
     },
-    websocketonmessage(event) {
+    websocketonmessage (event) {
       console.log("Message from server", event.data);
     },
-    websocketonopen() {
+    websocketonopen () {
       console.log("socket is open");
     },
-    websocketonerror() {
+    websocketonerror () {
       console.log("异常");
     },
-    websocketonclose() {},
-    send(message) {
+    websocketonclose () { },
+    send (message) {
       this.socket.send(message);
     },
-    closeSocket() {
+    closeSocket () {
       this.socket.close();
     }
   },
-  created() {
+  created () {
     this.socket = new WebSocket("ws://localhost:3000/ws/game");
-    this.send("123");
     //接收到消息的回调方法
     this.socket.onmessage = this.websocketonmessage;
     //连接成功建立的回调方法
