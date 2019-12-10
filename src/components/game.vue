@@ -32,9 +32,11 @@ export default {
       // this.gameList[index] = this.status;
       this.$set(this.gameList, index, this.status);
       this.status == 1 ? (this.status = 2) : (this.status = 1);
+      this.send(this.gameList)
     },
     websocketonmessage (event) {
       console.log("Message from server", event.data);
+      this.gameList = event.data.gameList
     },
     websocketonopen () {
       console.log("socket is open");
@@ -50,8 +52,11 @@ export default {
       this.socket.close();
     }
   },
+  destroyed () {
+    this.closeSocket()
+  },
   created () {
-    this.socket = new WebSocket("ws://localhost:3000/ws/game");
+    this.socket = new WebSocket("ws://localhost:3001/game");
     //接收到消息的回调方法
     this.socket.onmessage = this.websocketonmessage;
     //连接成功建立的回调方法
