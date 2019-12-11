@@ -23,7 +23,9 @@ export default {
     };
   },
   methods: {
-    overPlay () { },
+    overPlay () {
+      this.send("0,0,0,0,0,0,0,0,0")
+    },
     play (index) {
       if (this.gameList[index] != 0) {
         return;
@@ -36,27 +38,46 @@ export default {
     },
     websocketonmessage (event) {
       console.log("Message from server", event.data);
-      this.gameList = event.data.gameList
+      this.gameList = event.data.split(',')
+      let num = 0
+      let num2 = 0
+      this.gameList.map(item => {
+        if (item == '1') {
+          num++
+        } else if (item == '2') {
+          num2++
+        }
+      })
+      if (num > num2) {
+        this.status = 2
+      } else if (num < num2) {
+        this.status = 1
+      } else {
+        this.status = 1
+      }
     },
     websocketonopen () {
       console.log("socket is open");
+      this.send('start')
     },
     websocketonerror () {
       console.log("异常");
     },
     websocketonclose () { },
     send (message) {
+      let msg = message.toString()
       this.socket.send(message);
     },
     closeSocket () {
       this.socket.close();
+      console.log("socket 已关闭");
     }
   },
   destroyed () {
     this.closeSocket()
   },
   created () {
-    this.socket = new WebSocket("ws://localhost:3001/game");
+    this.socket = new WebSocket("ws://47.101.134.233:3001/game");
     //接收到消息的回调方法
     this.socket.onmessage = this.websocketonmessage;
     //连接成功建立的回调方法
