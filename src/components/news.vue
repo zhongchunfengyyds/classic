@@ -1,23 +1,32 @@
 <template>
   <div class="hello">
-    <div class="content">
+    <div class="content infinite-list"
+         v-infinite-scroll="load">
       <div v-if="showDetailNews"></div>
-      <div
-        class="content-detail"
-        @dblclick="rmNews(item)"
-        @click.right.prevent.stop="rightEvent(item)"
-        @click="showNews(item)"
-        v-for="(item,index) in newsList"
-        :key="index"
-        v-else
-      >{{item.content}}</div>
+      <div class="infinite-list-item"
+      style="margin-bottom:20px;"
+           @dblclick="rmNews(item)"
+           @click.right.prevent.stop="rightEvent(item)"
+           @click="showNews(item)"
+           v-for="(item,index) in newsList"
+           :key="index"
+           v-else>{{item.content}}</div>
     </div>
     <div class="footer">
-      <el-input type="textarea" :rows="7" placeholder="发布新闻..." v-model="textarea"></el-input>
+      <el-input type="textarea"
+                :rows="7"
+                placeholder="发布新闻..."
+                v-model="textarea"></el-input>
       <div class="submit-news">
-        <el-button type="primary" @click="changeNews" v-if="changeId">修改</el-button>
-        <el-button type="primary" @click="giveUpChange" v-if="changeId">取消</el-button>
-        <el-button type="primary" @click="submit" v-else>提交</el-button>
+        <el-button type="primary"
+                   @click="changeNews"
+                   v-if="changeId">修改</el-button>
+        <el-button type="primary"
+                   @click="giveUpChange"
+                   v-if="changeId">取消</el-button>
+        <el-button type="primary"
+                   @click="submit"
+                   v-else>提交</el-button>
       </div>
       <div>
         <p>双击删除新闻</p>
@@ -32,7 +41,7 @@
 let time;
 export default {
   name: "HelloWorld",
-  data() {
+  data () {
     return {
       showDetailNews: "",
       newsList: [],
@@ -41,7 +50,10 @@ export default {
     };
   },
   methods: {
-    submit() {
+    load () {
+      console.warn('load')
+    },
+    submit () {
       this.$axios
         .post("/news/uploadNews", {
           content: this.textarea
@@ -56,11 +68,11 @@ export default {
           }
         });
     },
-    giveUpChange() {
+    giveUpChange () {
       this.changeId = 0;
       this.textarea = "";
     },
-    changeNews() {
+    changeNews () {
       this.$axios
         .post("/news/changeNews", {
           id: this.changeId,
@@ -77,18 +89,18 @@ export default {
           }
         });
     },
-    showNews() {
+    showNews () {
       //执行延时
       // timer = setTimeout(() => {
       //   this.$message("功能正在开发中");
       //   //do function在此处写单击事件要执行的代码
       // }, 1000);
     },
-    rightEvent(item) {
+    rightEvent (item) {
       this.textarea = item.content;
       this.changeId = item._id;
     },
-    rmNews(item) {
+    rmNews (item) {
       // clearTimeout(timer);
       console.log(item);
       this.$axios
@@ -104,13 +116,13 @@ export default {
           }
         });
     },
-    getNews() {
+    getNews () {
       this.$axios.get("/news/getNews").then(res => {
         this.newsList = res.data;
       });
     }
   },
-  created() {
+  created () {
     this.getNews();
   }
 };
@@ -124,15 +136,10 @@ export default {
   flex-direction: column;
   .content {
     flex: 3;
+    overflow-x: auto;
     .content-detail {
-      position: relative;
-      display: table-cell;
-      height: 200px;
-      width: 240px;
-      padding: 0 20px;
-      text-align: center;
-      text-indent: 2em;
-      vertical-align: middle;
+      display: inline-block;
+      max-width: 300px;
     }
   }
   .footer {
