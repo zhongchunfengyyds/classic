@@ -45,6 +45,12 @@ export default new Router({
           name: 'game',
           component: () =>
             import( /* webpackChunkName: "home" */ './components/game.vue')
+        },
+        {
+          path: '/tongji',
+          name: 'tongji',
+          component: () =>
+            import( /* webpackChunkName: "home" */ './components/tongji.vue')
         }
       ],
       component: () =>

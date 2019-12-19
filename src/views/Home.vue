@@ -1,35 +1,40 @@
 <template>
-  <div class="home" ref="home">
+  <div class="home"
+       ref="home">
     <div class="top"></div>
     <div class="home-content">
       <el-row class="tac home-content-nav">
         <el-col :span="12">
-          <el-menu
-            class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
-            background-color="#eee"
-            text-color="#000"
-            active-text-color="blue"
-          >
+          <el-menu class="el-menu-vertical-demo"
+                   @open="handleOpen"
+                   @close="handleClose"
+                   background-color="#eee"
+                   text-color="#000"
+                   active-text-color="blue">
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>导航一</span>
               </template>
-              <el-menu-item index="1-1" @click="payOnline">练习</el-menu-item>
-              <el-menu-item index="1-2" @click="map">地图</el-menu-item>
-              <el-menu-item index="1-3" @click="news">新闻</el-menu-item>
+              <el-menu-item index="1-1"
+                            @click="payOnline">练习</el-menu-item>
+              <el-menu-item index="1-2"
+                            @click="map">地图</el-menu-item>
+              <el-menu-item index="1-3"
+                            @click="news">新闻</el-menu-item>
               <el-submenu index="1-4">
                 <template slot="title">其他</template>
-                <el-menu-item index="1-4-1" @click="game">游戏</el-menu-item>
+                <el-menu-item index="1-4-1"
+                              @click="game">游戏</el-menu-item>
               </el-submenu>
             </el-submenu>
-            <el-menu-item index="2">
+            <el-menu-item index="2"
+                          @click="tongji">
               <i class="el-icon-menu"></i>
-              <span slot="title">导航二</span>
+              <span slot="title">统计</span>
             </el-menu-item>
-            <el-menu-item index="3" disabled>
+            <el-menu-item index="3"
+                          disabled>
               <i class="el-icon-document"></i>
               <span slot="title">导航三</span>
             </el-menu-item>
@@ -50,29 +55,32 @@
 <script>
 export default {
   name: "home",
-  data() {
+  data () {
     return {
       menuList: [],
       activeName: ""
     };
   },
   methods: {
-    news() {
+    news () {
       this.$router.push({ path: "/news" });
     },
-    handleOpen() {},
-    handleClose() {},
-    payOnline() {
+    tongji () {
+      this.$router.push({ path: "/tongji" });
+    },
+    handleOpen () { },
+    handleClose () { },
+    payOnline () {
       this.$router.push({ path: "/payOnline" });
     },
-    map() {
+    map () {
       this.$router.push({ path: "/map" });
     },
-    game() {
+    game () {
       this.$router.push({ path: "/game" });
     }
   },
-  created() {}
+  created () { }
 };
 </script>
 

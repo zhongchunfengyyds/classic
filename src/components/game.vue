@@ -19,7 +19,8 @@ export default {
     return {
       gameList: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       status: 1,
-      socket: ""
+      socket: "",
+      index: ''
     };
   },
   methods: {
@@ -38,7 +39,9 @@ export default {
     },
     websocketonmessage (event) {
       console.log("Message from server", event.data);
-      this.gameList = event.data.split(',')
+      let data = JSON.parse(event.data)
+      this.gameList = data.gameList.split(',')
+      this.index = data.index
       let num = 0
       let num2 = 0
       this.gameList.map(item => {
@@ -69,6 +72,7 @@ export default {
       this.socket.send(message);
     },
     closeSocket () {
+      this.send("index" + this.index)
       this.socket.close();
       console.log("socket 已关闭");
     }
@@ -76,7 +80,7 @@ export default {
   destroyed () {
     this.closeSocket()
   },
-  created () {
+  mounted () {
     this.socket = new WebSocket("ws://47.101.134.233:3001/game");
     //接收到消息的回调方法
     this.socket.onmessage = this.websocketonmessage;
@@ -87,7 +91,7 @@ export default {
     //连接关闭的回调方法
     this.socket.onclose = this.websocketonclose;
     //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-    window.addEventListener("beforeunload", e => this.closeSocket(e));
+    // window.addEventListener("beforeunload", e => this.closeSocket(e));
   }
 };
 </script>
