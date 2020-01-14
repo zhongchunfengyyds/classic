@@ -1,4 +1,5 @@
 module.exports = {
+  publicPath: '/zhong/',
   devServer: {
     port: 9999, // 端口号
     host: 'localhost',
